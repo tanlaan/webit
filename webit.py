@@ -11,7 +11,9 @@ def main(filename='bookmarks.mkd', prefix=''):
     outfile = open(f'{prefix + "index.html"}','w')
     categorize(infile, prefix)
     converted = markdowner.convert(infile.read())
-    outfile.write(linkify(converted))
+    linked = linkify(converted)
+    templated = templatize(linked, 'template.html')
+    outfile.write(templated)
     outfile.close()
     infile.close()
     return
@@ -47,7 +49,7 @@ def templatize(data, filename):
         else:
             tempPage += line
 
-    return
+    return tempPage
 
 def linkify(page):
     seperator = ''
